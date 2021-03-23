@@ -6,6 +6,9 @@
   background-color: #282c34;
   color: white;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .App-header {
@@ -27,6 +30,7 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  width: 100%;
 
 }
 
@@ -44,10 +48,9 @@ h1 {
   display: grid;
   grid-template-columns: auto auto auto 1fr;
   grid-template-rows: 1fr;
-  margin: 10px;
+  margin: 5px;
   max-width: 95vw;
   border: 1px solid white;
-
 }
 
 .singleFileItem {
@@ -81,12 +84,21 @@ h1 {
 
 }
 
+/* all file container style rules */
+
+.allFileCont {
+  display: flex;
+    align-items: center;
+    flex-direction: column;
+
+}
+
 
 /* search bar style rules  */
 
 .searchBar {
   margin: 10px;
-  max-width: 95vw;
+  width: 95vw;
   background-color: grey;
 }
 
@@ -108,20 +120,40 @@ form input {
 /* text file display style rules */
 
 .textFileDisplayCont {
-  width: 95vw;
+  width: 98vw;
   height: 80vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 10px;
+  /* margin: 10px; */
+  position: absolute;
+  background-color: #282c34;
 
 
 }
 
 .textFileDisplay {
-  width: 80%;
+  width: auto;
   height: 100%;
   resize: none;
+  grid-column: 2/3;
 
+}
+
+li, ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.textFileDisplayWithTags {
+  display: grid;
+  grid-template-columns: 1fr 6fr 1fr;
+  width: 100%;
+  height: 100%;
+}
+
+.tagSidebar {
+  grid-column: 3/4;
 }

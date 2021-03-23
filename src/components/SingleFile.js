@@ -8,11 +8,15 @@ const SingleFile = (props) => {
         title: props.file.title,
         firstSentence: props.file.firstSentence,
         body: props.file.body,
+        index: props.index,
     };
 
+    let handleClick = (e) => {
+        props.showReport(file.index);
+    };
 
     return (
-        <div className="singleFileCont">
+        <div onClick={handleClick} className="singleFileCont">
 
             <div className="singleFileItem fileId">{file.id}</div>
             <div className="singleFileItem fileTitle">{file.title}</div>

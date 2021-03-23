@@ -10,6 +10,7 @@ let handleChange = (e) => {
 
 let handleSubmit = (e) => {
     e.preventDefault();
+    props.getSearchCriteria(searchInput);
 };
 
     return (
