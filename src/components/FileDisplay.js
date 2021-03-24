@@ -1,4 +1,4 @@
-import {React, useState} from "react";
+import {React, useState, useEffect} from "react";
 import SingleFile from './SingleFile';
 import TextFileDisplay from './TextFileDisplay';
 
@@ -6,6 +6,7 @@ const FileDisplay = (props) => {
 
 let [report, setReport] = useState('');
 let [testTags, setTestTags] = useState({});
+let [constrained, setConstrained] = useState([]);
 
     let sampleFiles = [
         {
@@ -54,8 +55,13 @@ let [testTags, setTestTags] = useState({});
 
 
 let showReport = (arg) => {
-    setReport(sampleFiles[arg]);
-    console.log(sampleFiles[arg].title);
+    let report = sampleFiles[arg];
+    report.index = arg;
+
+
+    setReport(report);
+    // setReport(sampleFiles[arg]);
+    // console.log(sampleFiles[arg].title);
 };
 
 let clearReport = () => {
@@ -97,14 +103,64 @@ let getAddTagCallback = (func) => {
 
 let regex = new RegExp(`${props.searchCriteria}`,'i');
 
+
+let constrainItems = () => {
+    let constrainedItems=[];
+    sampleFiles.forEach( (report, index)=> {
+        if (props.searchCriteria==='' || report.body.search(regex) > -1) {
+            constrainedItems.push(index);
+        };
+    });
+    setConstrained(constrainedItems);
+    console.log(constrained);
+};
+
+useEffect( ()=> {
+    constrainItems();
+},[props.searchCriteria]);
+
+let iterateReport = (index, dir) => {
+    console.log("index", index);
+    if (constrained.length>0) {
+        let currentConstrained = constrained.findIndex((item)=> item===index);
+        if (currentConstrained===-1 ){
+            currentConstrained=0;
+        } else {
+            currentConstrained +=dir;
+        }
+
+        if (currentConstrained >= constrained.length || currentConstrained < 0) {
+            currentConstrained -=dir;
+        }
+    
+        // setReport(sampleFiles[constrained[currentConstrained]]);
+        showReport(constrained[currentConstrained]);
+        
+
+    };
+
+};
+
     return (
         <div className="allFileCont">
-            {report && < TextFileDisplay searchCriteria={props.searchCriteria} addTag={addTag} activeTags= {testTags} id={report.id} report= {report} clearReport={clearReport} />}
-            {sampleFiles.map( (item, index)=> {
+            {console.log("report", report)}
+            {report && < TextFileDisplay key={report.id} searchCriteria={props.searchCriteria} iterateReport={iterateReport} addTag={addTag} activeTags= {testTags} id={report.id} report= {report} clearReport={clearReport} />}
+
+
+            {constrained.map( (item) => {
+                
+                return < SingleFile key={sampleFiles[item].id}  activeTags= {testTags[sampleFiles[item].id]} showReport={showReport} index={item} file={sampleFiles[item]}/>
+            })}
+
+
+
+
+            {/* {sampleFiles.map( (item, index)=> {
                 if (props.searchCriteria==='' || item.body.search(regex) > -1) {
                     return < SingleFile key={item.id}  activeTags= {testTags[item.id]} showReport={showReport} index={index} file={item}/>
                 }
-            })}
+            })} */}
+
 
         </div>
     )
