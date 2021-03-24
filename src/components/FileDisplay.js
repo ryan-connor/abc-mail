@@ -1,6 +1,7 @@
 import {React, useState, useEffect} from "react";
 import SingleFile from './SingleFile';
 import TextFileDisplay from './TextFileDisplay';
+import ParsedFiles from '../ParsedFiles';
 
 const FileDisplay = (props) => {
 
@@ -9,52 +10,7 @@ let [report, setReport] = useState('');
 let [testTags, setTestTags] = useState({});
 let [constrained, setConstrained] = useState([]);
 
-
-//sample files to display
-    let sampleFiles = [
-        {
-        id: 1,
-        title: "Report 1",
-        firstSentence: "This is a sample report for testing the display",
-        body: "This is the body of the report, with a lot more words and info in it. This report is pretty long so it should probably have hidden overflow. Apple. ",
-        tags: [],
-        },
-        {
-        id: 2,
-        title: "Report 2",
-        firstSentence: "This is a sample report for testing the display",
-        body: "This is the body of the report, with a lot more words and info in it. This report is pretty long so it should probably have hidden overflow. Banana.",
-        tags: [],
-        },
-        {
-        id: 3,
-        title: "Report 3",
-        firstSentence: "This is a sample report for testing the display",
-        body: "This is the body of the report, with a lot more words and info in it. This report is pretty long so it should probably have hidden overflow. Orange.",
-        tags: [],
-        },
-        {
-        id: 4,
-        title: "Report 4",
-        firstSentence: "This is a sample report for testing the display",
-        body: "This is the body of the report, with a lot more words and info in it. This report is pretty long so it should probably have hidden overflow. Apple.",
-        tags: [],
-        },
-        {
-        id: 5,
-        title: "Report 5",
-        firstSentence: "This is a sample report for testing the display",
-        body: "This is the body of the report, with a lot more words and info in it. This report is pretty long so it should probably have hidden overflow. Orange.",
-        tags: [],
-        },
-        {
-        id: 6,
-        title: "Report 6",
-        firstSentence: "This is a sample report for testing the display",
-        body: "This is the body of the report, with a lot more words and info in it. This report is pretty long so it should probably have hidden overflow. Apple.",
-        tags: [],
-        },
-];
+let sampleFiles = ParsedFiles;
 
 //callback function to display a chosen report
 let showReport = (arg) => {
@@ -135,7 +91,6 @@ let iterateReport = (index, dir) => {
 
     return (
         <div className="allFileCont">
-            {console.log("report", report)}
             {report && < TextFileDisplay key={report.id} searchCriteria={props.searchCriteria} iterateReport={iterateReport} addTag={addTag} activeTags= {testTags} id={report.id} report= {report} clearReport={clearReport} />}
 
             {constrained.map( (item) => {

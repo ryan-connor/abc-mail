@@ -6,8 +6,8 @@ const SingleFile = (props) => {
     let file = {
         id: props.file.id,
         title: props.file.title,
-        firstSentence: props.file.firstSentence,
-        body: props.file.body,
+        firstSentence: props.file.body.slice(0,80),
+        body: props.file.body.slice(80),
         index: props.index,
     };
 

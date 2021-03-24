@@ -45,7 +45,7 @@ h1 {
 
 .singleFileCont {
   display: grid;
-  grid-template-columns: auto auto auto 1fr;
+  grid-template-columns: auto .5fr 1fr 1fr;
   grid-template-rows: 1fr auto;
   margin: 5px;
   width: 85vw;
@@ -61,8 +61,10 @@ h1 {
 }
 
 .fileTitle {
-  width: fit-content;
+  width: auto;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .fileSentence {

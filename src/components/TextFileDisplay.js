@@ -6,27 +6,10 @@ const TextFileDisplay = (props) => {
 let [textState, setTextState] = useState(props.report);
 let [currentTags, setCurrentTags] = useState(props.activeTags[props.id]);
 
-//function to parse text file from project gutenberg
-let handleClick = async (e) => {
-
-    let response = await fetch('./txtFiles/aliceInWonderland.txt');
-    let loadedText = await response.text();
-    let titleIndex = loadedText.indexOf("Title");
-    let endTitle= loadedText.slice(titleIndex, titleIndex+200).search('\r\n|\r|\n') + titleIndex;
-    let slicedTitle = loadedText.slice(titleIndex+7, endTitle);
-    let prevState = {...textState};
-    prevState.body=loadedText;
-    setTextState(prevState);
-};
-
+//function to add tag to active report
 let addTag = (e) => {
-console.log(e.target.innerText);
 props.addTag(e.target.innerText, textState.id);
 (currentTags)?setCurrentTags([...currentTags, e.target.innerText]):setCurrentTags([e.target.innerText]);
-
-
-// props.addTag(e.target.innerText);
-
 };
 
 //iterate through constrained reports using callback
@@ -52,8 +35,7 @@ let handleKeyPress = (e) => {
 
     return (
         <div className="textFileDisplayCont"  tabIndex="0" onKeyDown={handleKeyPress}>
-            <button onClick={handleClick}>Load Text File</button>
-            
+                        
             <div className="nav">
                     <div className="navArrow" onClick={()=>iterateReports(-1)}> &lt;- Prev</div>
                     <button onClick={props.clearReport}>Close</button>
