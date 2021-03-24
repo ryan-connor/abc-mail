@@ -1,33 +1,24 @@
 import {React, useState} from 'react';
 import './App.css';
 import Header from './components/Header';
-// import SingleFile from './components/SingleFile';
 import FileDisplay from './components/FileDisplay';
 import SearchBar from './components/SearchBar';
-// import TextFileDisplay from './components/TextFileDisplay';
-
-
-
 
 function App() {
 
-
+  //initialize search criteria state
 let [searchCriteria, setSearchCriteria] = useState('');
 
+//callback to set search criteria
 let getSearchCriteria = (crit) => {
   setSearchCriteria(crit);
-  console.log(crit);
 };
-
-
 
   return (
     <div className="App">
       < Header/>
       < SearchBar getSearchCriteria= {getSearchCriteria}/>
       < FileDisplay searchCriteria={searchCriteria}/>
-      {/* < TextFileDisplay /> */}
-
     </div>
   );
 }

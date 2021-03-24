@@ -31,7 +31,6 @@
   font-size: calc(10px + 2vmin);
   color: white;
   width: 100%;
-
 }
 
 .headerItem {
@@ -41,56 +40,49 @@
 h1 {
   font-size: inherit;
 }
+
 /* single file style rules */
 
 .singleFileCont {
-
   display: grid;
   grid-template-columns: auto auto auto 1fr;
   grid-template-rows: 1fr auto;
   margin: 5px;
   width: 85vw;
-  /* border: 1px solid white; */
 }
 
 .singleFileItem {
   border: 1px solid white;
   padding: 5px;
-
 }
 
 .fileId {
   width:fit-content;
-
 }
 
 .fileTitle {
   width: fit-content;
   white-space: nowrap;
-
 }
 
 .fileSentence {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-
 }
 
 .fileBody {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-
 }
 
 /* all file container style rules */
 
 .allFileCont {
   display: flex;
-    align-items: center;
-    flex-direction: column;
-
+  align-items: center;
+  flex-direction: column;
 }
 
 .activeTagsDisplay {
@@ -100,8 +92,6 @@ h1 {
   align-items: center;
   overflow: hidden;
   width: fit-content;
-
-
 }
 
 .activeTagsDisplay li{
@@ -110,23 +100,19 @@ h1 {
   border-radius: 5px;
   padding: 2px;
   margin: 1px;
-  
-
 }
-
 
 /* search bar style rules  */
 
 .searchBar {
   margin: 10px;
-  width: 95vw;
- 
+  width: 90vw;
 }
 
 form {
-display: grid;
-grid-template-columns: 3fr 1fr;
-grid-template-rows: 1fr;
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  grid-template-rows: 1fr;
 }
 
 form input {
@@ -140,7 +126,6 @@ form input {
   outline: none
 }
 
-
 /* text file display style rules */
 
 .textFileDisplayCont {
@@ -150,11 +135,8 @@ form input {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  /* margin: 10px; */
   position: absolute;
   background-color: #282c34;
-
-
 }
 
 .textFileDisplay {
@@ -162,7 +144,6 @@ form input {
   height: 100%;
   resize: none;
   grid-column: 2/3;
-
 }
 
 li, ul {
@@ -190,7 +171,6 @@ li {
   display: flex;
   flex-direction: column;
   align-items: center;
-
 }
 
 .activeTags li {
@@ -213,8 +193,8 @@ background-color: #226327;
 
 .inactiveTags {
   display: flex;
-    flex-direction: column;
-    align-items: center;
+  flex-direction: column;
+  align-items: center;
 }
 
 .nav {

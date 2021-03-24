@@ -1,7 +1,8 @@
-import {React, useState, useEffect} from "react";
+import {React, useState} from "react";
 
 const TextFileDisplay = (props) => {
 
+//initialize states for active report and current tags
 let [textState, setTextState] = useState(props.report);
 let [currentTags, setCurrentTags] = useState(props.activeTags[props.id]);
 
@@ -28,36 +29,24 @@ props.addTag(e.target.innerText, textState.id);
 
 };
 
+//iterate through constrained reports using callback
 let iterateReports = (dir) => {
-
-    console.log(dir);
-    console.log("report index:", props.report.index);
     props.iterateReport(props.report.index, dir);
-
-
 };
 
+//function to set tags based on key presses
 let handleKeyPress = (e) => {
-
-    console.log("key press");
-    console.log(e.charCode);
-    console.log(e.key);
-
     if (e.key == 1) {
         if (!currentTags || currentTags.findIndex((item)=> item==="Important")===-1) {
             props.addTag('Important', textState.id);
             (currentTags)?setCurrentTags([...currentTags, 'Important']):setCurrentTags(['Important']);
         }
-
     } else if (e.key == 2){
         if (!currentTags || (props.searchCriteria && currentTags.findIndex((item)=> item===props.searchCriteria)===-1)){
             props.addTag(props.searchCriteria, textState.id);
             (currentTags)?setCurrentTags([...currentTags, props.searchCriteria]):setCurrentTags([props.searchCriteria]);
-
         }
-
     };
-
 };
 
 
@@ -70,8 +59,8 @@ let handleKeyPress = (e) => {
                     <button onClick={props.clearReport}>Close</button>
                     <div className="navArrow" onClick={()=>iterateReports(1)}>Next -&gt;</div>
                 </div>
-            <div className="textFileDisplayWithTags">
 
+            <div className="textFileDisplayWithTags">
                 <textarea readOnly autoFocus className="textFileDisplay" placeholder='sample text here' value={textState.body}></textarea>
                 <div className="tagSidebar">
                     {props.activeTags[props.id] &&                    
@@ -79,7 +68,7 @@ let handleKeyPress = (e) => {
                     Active Tags:
                         <ul>
                             {props.activeTags[props.id].map( (item)=> {
-                                return <li>{item}</li>
+                                return <li key={item}>{item}</li>
                             })}
                         </ul>
                     </div>}
@@ -87,12 +76,8 @@ let handleKeyPress = (e) => {
                     <div className="inactiveTags">
                     Add Tags:
                         <ul>
-                            {console.log("active tags from id", props.activeTags[props.id])}
-                            {console.log("active tags from report", props.activeTags[props.report.id])}
-                            {console.log("current tags:", currentTags)}
-                            {console.log("search crit:", props.searchCriteria)}
                             {(!currentTags || currentTags.findIndex((item)=> item==="Important")===-1) && <li onClick={addTag}>Important</li>}
-                            {(!currentTags || (props.searchCriteria && currentTags.findIndex((item)=> item===props.searchCriteria)===-1)) && <li onClick={addTag} >{props.searchCriteria}</li>}
+                            {((!currentTags && props.searchCriteria) || (props.searchCriteria && currentTags.findIndex((item)=> item===props.searchCriteria)===-1)) && <li onClick={addTag}>{props.searchCriteria}</li>}
                         </ul>
                     </div>
                 </div>

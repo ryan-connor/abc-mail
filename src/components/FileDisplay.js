@@ -4,10 +4,13 @@ import TextFileDisplay from './TextFileDisplay';
 
 const FileDisplay = (props) => {
 
+//initialize states for active report, tags, and constrained results
 let [report, setReport] = useState('');
 let [testTags, setTestTags] = useState({});
 let [constrained, setConstrained] = useState([]);
 
+
+//sample files to display
     let sampleFiles = [
         {
         id: 1,
@@ -53,64 +56,37 @@ let [constrained, setConstrained] = useState([]);
         },
 ];
 
-
+//callback function to display a chosen report
 let showReport = (arg) => {
     let report = sampleFiles[arg];
     report.index = arg;
-
-
     setReport(report);
-    // setReport(sampleFiles[arg]);
-    // console.log(sampleFiles[arg].title);
 };
 
+//callback function to clear current active report
 let clearReport = () => {
     setReport();
 };
 
+//callback function to add tag to active report
 let addTag = (tag, id) => {
-
-//     let index= sampleFiles.findIndex( (item)=> {
-//     return item.id === id;
-// });
-// sampleFiles[index].tags.push(tag);
-// console.log(sampleFiles[index]);
-
 let prevTags = testTags;
-console.log(prevTags[id]);
 (prevTags[id])?prevTags[id].push(tag): prevTags[id] = [tag];
-
 setTestTags(prevTags);
-console.log("state tags:", testTags);
-
 };
 
-let addTagCallback;
-
-let getAddTagCallback = (func) => {
-    addTagCallback = func;
-};
-
-
-// let displayTags = (id) => {
-//     if (testTags[id]) {
-//         testTags[id].map( (item) => {
-//             return item
-//         })
-//     };
-
-// };
-
-
-
-
+//function to constrain results to display based on search criteria
 let constrainItems = () => {
     let regex;
     let constrainedItems=[];
 
     if (props.searchCriteria === '' || props.searchCriteria[0] !== '-') {
+        try {
+            regex = new RegExp(`${props.searchCriteria}`,'i');
+        } catch (e) {
+            console.error(e);
+        }
         
-        regex = new RegExp(`${props.searchCriteria}`,'i');
         sampleFiles.forEach( (report, index)=> {
         if (props.searchCriteria==='' || (report.body.search(regex) > -1)) {
             constrainedItems.push(index);
@@ -118,36 +94,31 @@ let constrainItems = () => {
     });
 
     } else if (props.searchCriteria[0] === '-'){
+        try {
+            regex = new RegExp(`${props.searchCriteria.slice(1)}`,'i');
+        } catch (e) {
+            console.error(e);
+        }
         
-        regex = new RegExp(`${props.searchCriteria.slice(1)}`,'i');
         sampleFiles.forEach( (report, index)=> {
         if (!(report.body.search(regex) > -1)) {
             constrainedItems.push(index);
         };
     });
-  
     };
     
-
-    // let constrainedItems=[];
-    // sampleFiles.forEach( (report, index)=> {
-    //     if (props.searchCriteria==='' || (report.body.search(regex) > -1)) {
-    //         constrainedItems.push(index);
-    //     };
-    // });
-
-
     setConstrained(constrainedItems);
-    console.log("constrained", constrained);
 
 };
 
+//re-constrain results whenever search criteria prop changes
 useEffect( ()=> {
     constrainItems();
 },[props.searchCriteria]);
 
+//callback function to iterate through constrained reports
 let iterateReport = (index, dir) => {
-    console.log("index", index);
+
     if (constrained.length>0) {
         let currentConstrained = constrained.findIndex((item)=> item===index);
         if (currentConstrained===-1 ){
@@ -155,17 +126,11 @@ let iterateReport = (index, dir) => {
         } else {
             currentConstrained +=dir;
         }
-
         if (currentConstrained >= constrained.length || currentConstrained < 0) {
             currentConstrained -=dir;
         }
-    
-        // setReport(sampleFiles[constrained[currentConstrained]]);
         showReport(constrained[currentConstrained]);
-        
-
     };
-
 };
 
     return (
@@ -173,22 +138,9 @@ let iterateReport = (index, dir) => {
             {console.log("report", report)}
             {report && < TextFileDisplay key={report.id} searchCriteria={props.searchCriteria} iterateReport={iterateReport} addTag={addTag} activeTags= {testTags} id={report.id} report= {report} clearReport={clearReport} />}
 
-
             {constrained.map( (item) => {
-                
                 return < SingleFile key={sampleFiles[item].id}  activeTags= {testTags[sampleFiles[item].id]} showReport={showReport} index={item} file={sampleFiles[item]}/>
             })}
-
-
-
-
-            {/* {sampleFiles.map( (item, index)=> {
-                if (props.searchCriteria==='' || item.body.search(regex) > -1) {
-                    return < SingleFile key={item.id}  activeTags= {testTags[item.id]} showReport={showReport} index={index} file={item}/>
-                }
-            })} */}
-
-
         </div>
     )
 };
