@@ -101,18 +101,45 @@ let getAddTagCallback = (func) => {
 
 // };
 
-let regex = new RegExp(`${props.searchCriteria}`,'i');
+
 
 
 let constrainItems = () => {
+    let regex;
     let constrainedItems=[];
-    sampleFiles.forEach( (report, index)=> {
-        if (props.searchCriteria==='' || report.body.search(regex) > -1) {
+
+    if (props.searchCriteria === '' || props.searchCriteria[0] !== '-') {
+        
+        regex = new RegExp(`${props.searchCriteria}`,'i');
+        sampleFiles.forEach( (report, index)=> {
+        if (props.searchCriteria==='' || (report.body.search(regex) > -1)) {
             constrainedItems.push(index);
         };
     });
+
+    } else if (props.searchCriteria[0] === '-'){
+        
+        regex = new RegExp(`${props.searchCriteria.slice(1)}`,'i');
+        sampleFiles.forEach( (report, index)=> {
+        if (!(report.body.search(regex) > -1)) {
+            constrainedItems.push(index);
+        };
+    });
+  
+    };
+    
+
+    // let constrainedItems=[];
+    // sampleFiles.forEach( (report, index)=> {
+    //     if (props.searchCriteria==='' || (report.body.search(regex) > -1)) {
+    //         constrainedItems.push(index);
+    //     };
+    // });
+
+
     setConstrained(constrainedItems);
-    console.log(constrained);
+    console.log("constrained", constrained);
+
 };
 
 useEffect( ()=> {

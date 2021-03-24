@@ -37,11 +37,32 @@ let iterateReports = (dir) => {
 
 };
 
+let handleKeyPress = (e) => {
 
+    console.log("key press");
+    console.log(e.charCode);
+    console.log(e.key);
+
+    if (e.key == 1) {
+        if (!currentTags || currentTags.findIndex((item)=> item==="Important")===-1) {
+            props.addTag('Important', textState.id);
+            (currentTags)?setCurrentTags([...currentTags, 'Important']):setCurrentTags(['Important']);
+        }
+
+    } else if (e.key == 2){
+        if (!currentTags || (props.searchCriteria && currentTags.findIndex((item)=> item===props.searchCriteria)===-1)){
+            props.addTag(props.searchCriteria, textState.id);
+            (currentTags)?setCurrentTags([...currentTags, props.searchCriteria]):setCurrentTags([props.searchCriteria]);
+
+        }
+
+    };
+
+};
 
 
     return (
-        <div className="textFileDisplayCont">
+        <div className="textFileDisplayCont"  tabIndex="0" onKeyDown={handleKeyPress}>
             <button onClick={handleClick}>Load Text File</button>
             
             <div className="nav">
@@ -51,7 +72,7 @@ let iterateReports = (dir) => {
                 </div>
             <div className="textFileDisplayWithTags">
 
-                <textarea readOnly className="textFileDisplay" placeholder='sample text here' value={textState.body}></textarea>
+                <textarea readOnly autoFocus className="textFileDisplay" placeholder='sample text here' value={textState.body}></textarea>
                 <div className="tagSidebar">
                     {props.activeTags[props.id] &&                    
                     <div className="activeTags">
@@ -71,7 +92,7 @@ let iterateReports = (dir) => {
                             {console.log("current tags:", currentTags)}
                             {console.log("search crit:", props.searchCriteria)}
                             {(!currentTags || currentTags.findIndex((item)=> item==="Important")===-1) && <li onClick={addTag}>Important</li>}
-                            {(!currentTags || (props.searchCriteria && currentTags.findIndex((item)=> item===props.searchCriteria)===-1)) && <li onClick={addTag}>{props.searchCriteria}</li>}
+                            {(!currentTags || (props.searchCriteria && currentTags.findIndex((item)=> item===props.searchCriteria)===-1)) && <li onClick={addTag} >{props.searchCriteria}</li>}
                         </ul>
                     </div>
                 </div>
