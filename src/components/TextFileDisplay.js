@@ -2,13 +2,12 @@ import {React, useState} from "react";
 
 const TextFileDisplay = (props) => {
 
-//initialize states for active report and current tags
-let [textState, setTextState] = useState(props.report);
-let [currentTags, setCurrentTags] = useState(props.activeTags[props.id]);
+//initialize states for current tags
+let [currentTags, setCurrentTags] = useState(props.activeTags[props.report.id]);
 
 //function to add tag to active report
 let addTag = (e) => {
-props.addTag(e.target.innerText, textState.id);
+props.addTag(e.target.innerText, props.report.id);
 (currentTags)?setCurrentTags([...currentTags, e.target.innerText]):setCurrentTags([e.target.innerText]);
 };
 
@@ -21,12 +20,12 @@ let iterateReports = (dir) => {
 let handleKeyPress = (e) => {
     if (e.key == 1) {
         if (!currentTags || currentTags.findIndex((item)=> item==="Important")===-1) {
-            props.addTag('Important', textState.id);
+            props.addTag('Important', props.report.id);
             (currentTags)?setCurrentTags([...currentTags, 'Important']):setCurrentTags(['Important']);
         }
     } else if (e.key == 2){
         if (!currentTags || (props.searchCriteria && currentTags.findIndex((item)=> item===props.searchCriteria)===-1)){
-            props.addTag(props.searchCriteria, textState.id);
+            props.addTag(props.searchCriteria, props.report.id);
             (currentTags)?setCurrentTags([...currentTags, props.searchCriteria]):setCurrentTags([props.searchCriteria]);
         }
     };
@@ -43,13 +42,13 @@ let handleKeyPress = (e) => {
                 </div>
 
             <div className="textFileDisplayWithTags">
-                <textarea readOnly autoFocus className="textFileDisplay" placeholder='sample text here' value={textState.body}></textarea>
+                <textarea readOnly autoFocus className="textFileDisplay" placeholder='sample text here' value={props.report.body}></textarea>
                 <div className="tagSidebar">
-                    {props.activeTags[props.id] &&                    
+                    {props.activeTags[props.report.id] &&                    
                     <div className="activeTags">
                     Active Tags:
                         <ul>
-                            {props.activeTags[props.id].map( (item)=> {
+                            {props.activeTags[props.report.id].map( (item)=> {
                                 return <li key={item}>{item}</li>
                             })}
                         </ul>

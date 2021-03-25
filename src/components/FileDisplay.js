@@ -7,7 +7,7 @@ const FileDisplay = (props) => {
 
 //initialize states for active report, tags, and constrained results
 let [report, setReport] = useState('');
-let [testTags, setTestTags] = useState({});
+let [tags, setTags] = useState({});
 let [constrained, setConstrained] = useState([]);
 
 let sampleFiles = ParsedFiles;
@@ -26,9 +26,9 @@ let clearReport = () => {
 
 //callback function to add tag to active report
 let addTag = (tag, id) => {
-let prevTags = testTags;
+let prevTags = tags;
 (prevTags[id])?prevTags[id].push(tag): prevTags[id] = [tag];
-setTestTags(prevTags);
+setTags(prevTags);
 };
 
 //function to constrain results to display based on search criteria
@@ -91,10 +91,10 @@ let iterateReport = (index, dir) => {
 
     return (
         <div className="allFileCont">
-            {report && < TextFileDisplay key={report.id} searchCriteria={props.searchCriteria} iterateReport={iterateReport} addTag={addTag} activeTags= {testTags} id={report.id} report= {report} clearReport={clearReport} />}
+            {report && < TextFileDisplay key={report.id} searchCriteria={props.searchCriteria} iterateReport={iterateReport} addTag={addTag} activeTags= {tags} report= {report} clearReport={clearReport} />}
 
             {constrained.map( (item) => {
-                return < SingleFile key={sampleFiles[item].id}  activeTags= {testTags[sampleFiles[item].id]} showReport={showReport} index={item} file={sampleFiles[item]}/>
+                return < SingleFile key={sampleFiles[item].id}  activeTags= {tags[sampleFiles[item].id]} showReport={showReport} index={item} file={sampleFiles[item]}/>
             })}
         </div>
     )
