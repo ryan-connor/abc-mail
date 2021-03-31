@@ -1,3 +1,7 @@
+<h4 align="center">
+<img alt="ABC Mail Gif" src="demo/AbcMail.gif" width="1000px">
+</h4>
+
 ## ABC Mail
 Email inspired frontend project.
 
